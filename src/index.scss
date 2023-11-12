@@ -1,0 +1,10 @@
+@import "./components/header/header";
+@import "./components/footer/footer";
+
+body {
+  background-color: grey;
+  display: grid;
+  span {
+    color: red;
+  }
+}
