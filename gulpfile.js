@@ -6,8 +6,6 @@ import gulpGroupCssMediaQueries from "gulp-group-css-media-queries";
 import gulpNotify from "gulp-notify";
 import gulpPlumber from "gulp-plumber";
 import browserSync from "browser-sync";
-import fs from "fs";
-import gulpSourcemaps from "gulp-sourcemaps";
 import imagemin from "gulp-imagemin";
 import gulpSvgSprite from "gulp-svg-sprite";
 import gulpAutoprefixer from "gulp-autoprefixer";
@@ -17,15 +15,18 @@ const dartSass = gulpSass(sass);
 const srcFolder = './src/';
 const destFolder = './public/';
 
+const plumberNotify = (addTitle) => {
+  return {
+    errorHandler: gulpNotify.onError(error => ({
+      title: addTitle,
+      message: error.message
+    }))
+  }
+}
 
 const html = () => {
   return gulp.src(`${srcFolder}*.html`)
-    .pipe(gulpPlumber({
-      errorHandler: gulpNotify.onError(error => ({
-        title: "html",
-        message: error.message
-      }))
-    }))
+    .pipe(gulpPlumber(plumberNotify('html')))
     .pipe(gulpFileInclude({
       prefix: '@',
       basepath: '@file'
@@ -38,46 +39,30 @@ const html = () => {
 export { html }
 
 const css = () => {
-  return gulp.src(`${srcFolder}*.scss`)
-    .pipe(gulpPlumber({
-      errorHandler: gulpNotify.onError(error => ({
-        title: "css",
-        message: error.message
-      }))
-    }))
+  return gulp.src(`${srcFolder}scss/*.scss`, { sourcemaps: true })
+    .pipe(gulpPlumber(plumberNotify('css')))
     .pipe(dartSass())
-    // .pipe(gulpGroupCssMediaQueries())
+    .pipe(gulpGroupCssMediaQueries())
     .pipe(gulpAutoprefixer({
       cascade: false,
       grid: true,
       overrideBrowserslist: ["last 5 versions"]
     }))
 
-    .pipe(gulp.dest(`${destFolder}css/`))
+    .pipe(gulp.dest(`${destFolder}css/`, { sourcemaps: true }))
 }
 export { css }
 
 const js = () => {
-  return gulp.src(`${srcFolder}*.js`)
-    .pipe(gulpPlumber({
-      errorHandler: gulpNotify.onError(error => ({
-        title: "js",
-        message: error.message
-      }))
-    }))
-
+  return gulp.src(`${srcFolder}js/*.js`)
+    .pipe(gulpPlumber(plumberNotify('js')))
     .pipe(gulp.dest(`${destFolder}js/`))
 }
 export { js }
 
 const img = () => {
   return gulp.src(`${srcFolder}img/**/*.{jpeg,jpg,png,gif,ico,webp,webmanifest,xml,json}`)
-    .pipe(gulpPlumber({
-      errorHandler: gulpNotify.onError(error => ({
-        title: "img",
-        message: error.message
-      }))
-    }))
+    .pipe(gulpPlumber(plumberNotify('img')))
     .pipe(imagemin({ verbose: true }))
     .pipe(gulp.dest(`${destFolder}img/`))
 }
@@ -85,12 +70,7 @@ export { img }
 
 const svg = () => {
   return gulp.src(`${srcFolder}svg/**/*.svg`)
-    .pipe(gulpPlumber({
-      errorHandler: gulpNotify.onError(error => ({
-        title: "svg",
-        message: error.message
-      }))
-    }))
+    .pipe(gulpPlumber(plumberNotify('svg')))
     .pipe(gulpSvgSprite({
       mode: {
         stack: {
@@ -101,6 +81,18 @@ const svg = () => {
     .pipe(gulp.dest(`${destFolder}img/svg`))
 }
 export { svg }
+
+const fonts = () => {
+  return gulp.src(`${srcFolder}fonts/**/*.*`)
+    .pipe(gulp.dest(`${destFolder}fonts/`))
+}
+export { fonts }
+
+const files = () => {
+  return gulp.src(`${srcFolder}files/**/*.*`)
+    .pipe(gulp.dest(`${destFolder}files/`))
+}
+export { files }
 
 const server = () => {
   browserSync.init({
@@ -117,16 +109,16 @@ const clean = () => {
 export { clean }
 
 const watcher = () => {
-  // gulp.watch(path.watch.files, copy).on("all", browserSync.reload)
+  gulp.watch(`${srcFolder}files/**/*.*`).on("all", browserSync.reload)
   gulp.watch(`${srcFolder}**/*.html`, html).on("all", browserSync.reload)
   gulp.watch(`${srcFolder}**/*.scss`, css).on("all", browserSync.reload)
   gulp.watch(`${srcFolder}**/*.js`, js).on("all", browserSync.reload)
-  gulp.watch(`${srcFolder}**/*.{jpeg,jpg,png,gif,ico,webp,webmanifest,xml,json}`, img).on("all", browserSync.reload)
-  gulp.watch(`${srcFolder}**/*.svg`, svg).on("all", browserSync.reload)
-  // gulp.watch(path.watch.fonts, fonts).on("all", browserSync.reload)
+  gulp.watch(`${srcFolder}img/**/*.{jpeg,jpg,png,gif,ico,webp,webmanifest,xml,json}`, img).on("all", browserSync.reload)
+  gulp.watch(`${srcFolder}svg/**/*.svg`, svg).on("all", browserSync.reload)
+  gulp.watch(`${srcFolder}fonts/**/*.*`, fonts).on("all", browserSync.reload)
 }
 
-const mainTasks = gulp.parallel(html, css, js, img, svg)
+const mainTasks = gulp.parallel(html, css, js, img, svg, fonts, files)
 
 // npm run dev
 const dev = gulp.series(clean, mainTasks, gulp.parallel(server, watcher))

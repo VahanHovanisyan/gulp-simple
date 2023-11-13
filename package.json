@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.29.3",
+    "css-loader": "^6.8.1",
     "del": "^6.0.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^9.0.0",
@@ -24,6 +25,9 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-svg-sprite": "^2.0.3",
     "gulp-typograf": "^4.1.0",
-    "sass": "^1.69.5"
+    "sass": "^1.69.5",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.89.0",
+    "webpack-stream": "^7.0.0"
   }
 }

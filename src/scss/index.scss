@@ -1,0 +1,29 @@
+@import "./components/header/header";
+@import "./components/footer/footer";
+
+body {
+  background-color: grey;
+  display: grid;
+  span {
+    color: red;
+  }
+}
+
+@media (min-width:576px) {
+  body {
+    background-color: blue;
+  }
+}
+
+@media (min-width:576px) {
+  body {
+    background-color: rgb(0, 208, 255);
+  }
+}
+
+@media (min-width:576px) {
+  body {
+    background-color: rgb(0, 255, 38);
+  }
+}
+

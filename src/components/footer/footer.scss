@@ -1,3 +1,9 @@
 .footer {
   background-color: blue;
 }
+
+@media (min-width:576px) {
+  .footer {
+    background-color: blue;
+  }
+}
