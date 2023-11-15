@@ -11,7 +11,6 @@
 // 		font-size: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth}));
 // 	}
 // }
-
 @mixin media-adaptiv-font($maxSize, $minSize) {
 	$addSize: $maxSize - $minSize;
 	$maxWidth: $wrapperWidth - 320;
