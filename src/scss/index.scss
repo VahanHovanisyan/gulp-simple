@@ -1,29 +1,15 @@
-@import "./components/header/header";
-@import "./components/footer/footer";
+@import "./config-scss/vars.scss";
+@import "./config-scss/mixin.scss";
+@import "../fonts/fonts.scss";
+@import "./config-scss/global.scss";
+@import "./config-scss/mix-class.scss";
+@import "../common.blocks/page/page.scss";
+@import "../common.blocks/page/__body/page__body.scss";
+@import "../components/header/header.scss";
+@import "../common.blocks/main/main.scss";
 
-body {
-  background-color: grey;
-  display: grid;
-  span {
-    color: red;
-  }
-}
+// sections
+@import "../common.blocks/index.blocks/first/first.scss";
+// /sections
 
-@media (min-width:576px) {
-  body {
-    background-color: blue;
-  }
-}
-
-@media (min-width:576px) {
-  body {
-    background-color: rgb(0, 208, 255);
-  }
-}
-
-@media (min-width:576px) {
-  body {
-    background-color: rgb(0, 255, 38);
-  }
-}
-
+@import "../components/footer/footer.scss";

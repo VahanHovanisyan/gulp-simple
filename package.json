@@ -5,17 +5,22 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "gulp dev",
+    "build": "gulp build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.23.3",
+    "@babel/preset-env": "^7.23.3",
     "browser-sync": "^2.29.3",
     "css-loader": "^6.8.1",
     "del": "^6.0.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^9.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-csso": "^4.0.1",
     "gulp-file-include": "^2.3.0",
     "gulp-group-css-media-queries": "^1.2.2",
     "gulp-imagemin": "^7.1.0",
@@ -29,5 +34,14 @@
     "style-loader": "^3.3.3",
     "webpack": "^5.89.0",
     "webpack-stream": "^7.0.0"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "dependencies": {
+    "air-datepicker": "^3.4.0",
+    "swiper": "^11.0.4"
   }
 }
