@@ -8,12 +8,14 @@ import webpackStream from "webpack-stream";
 import gulpChanged from "gulp-changed";
 import gulpSvgSprite from "gulp-svg-sprite";
 import browserSync from "browser-sync";
+import gulpRename from "gulp-rename";
 import gulpSassGlob from "gulp-sass-glob"
 import gulpSass from "gulp-sass";
 import * as sass from 'sass';
+import changed from "gulp-changed";
 const dartSass = gulpSass(sass);
 const srcFolder = './src/';
-const destFolder = './dist/';
+const destFolder = './docs/';
 
 const plumberNotify = (addTitle) => {
   return {
@@ -45,6 +47,10 @@ const css = () => {
     .pipe(gulpPlumber(plumberNotify('css')))
     .pipe(gulpSassGlob())
     .pipe(dartSass())
+    .pipe(gulpRename({
+      suffix: ".min",
+      extname: ".css"
+    }))
     .pipe(gulp.dest(`${destFolder}css/`, { sourcemaps: true }))
 }
 export { css }
@@ -140,7 +146,7 @@ const watcher = () => {
 export { watcher }
 
 const mainTasks = gulp.parallel(html, css, js, img, svg, fonts, files);
-export { mainTasks }
+
 
 const dev = gulp.series(clean, mainTasks, gulp.parallel(server, watcher));
 export { dev }

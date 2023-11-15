@@ -3,6 +3,7 @@ import del from "del";
 import browserSync from "browser-sync";
 import gulpFileInclude from "gulp-file-include";
 import gulpTypograf from "gulp-typograf";
+import gulpWebpHtml from "gulp-webp-html";
 import gulpGroupCssMediaQueries from "gulp-group-css-media-queries";
 import gulpNotify from "gulp-notify";
 import gulpPlumber from "gulp-plumber";
@@ -10,15 +11,18 @@ import webpackStream from "webpack-stream";
 import gulpChanged from "gulp-changed";
 import gulpBabel from "gulp-babel";
 import imagemin from "gulp-imagemin";
+import gulpWebp from "gulp-webp";
 import gulpSvgSprite from "gulp-svg-sprite";
 import gulpCsso from "gulp-csso";
+import gulpRename from "gulp-rename";
 import gulpAutoprefixer from "gulp-autoprefixer";
+import gulpWebpCss from "gulp-webp-css";
 import gulpSassGlob from "gulp-sass-glob"
 import gulpSass from "gulp-sass";
 import * as sass from 'sass';
 const dartSass = gulpSass(sass);
 const srcFolder = './src/';
-const destFolder = './dist/';
+const destFolder = './docs/';
 
 const plumberNotify = (addTitle) => {
   return {
@@ -37,6 +41,7 @@ const html = () => {
       prefix: '@',
       basepath: '@file'
     }))
+    .pipe(gulpWebpHtml())
     .pipe(gulpTypograf({
       locale: ['ru', 'en-US']
     }))
@@ -49,7 +54,8 @@ const css = () => {
     .pipe(gulpChanged(`${destFolder}/css/`))
     .pipe(gulpPlumber(plumberNotify('css')))
     .pipe(gulpSassGlob())
-    .pipe(dartSass()) 
+    .pipe(dartSass())
+    .pipe(gulpWebpCss())
     .pipe(gulpGroupCssMediaQueries())
     .pipe(gulpAutoprefixer({
       cascade: false,
@@ -57,6 +63,10 @@ const css = () => {
       overrideBrowserslist: ["last 5 versions"]
     }))
     .pipe(gulpCsso())
+    .pipe(gulpRename({
+      suffix: ".min",
+      extname: ".css"
+    }))
     .pipe(gulp.dest(`${destFolder}css/`))
 }
 export { css }
@@ -94,6 +104,10 @@ const img = () => {
   return gulp.src(`${srcFolder}img/**/*.{jpeg,jpg,png,gif,ico,webp,webmanifest,xml,json}`)
     .pipe(gulpChanged(`${destFolder}img/`))
     .pipe(gulpPlumber(plumberNotify('img')))
+    .pipe(gulpWebp())
+    .pipe(gulp.dest(`${destFolder}img/`))
+    .pipe(gulp.src(`${srcFolder}img/**/*.{jpeg,jpg,png,gif,ico,webp,webmanifest,xml,json}`))
+    .pipe(gulpChanged(`${destFolder}img/`))
     .pipe(imagemin({ verbose: true }))
     .pipe(gulp.dest(`${destFolder}img/`))
 }
@@ -143,7 +157,9 @@ const server = () => {
 export { server }
 
 const mainTasks = gulp.parallel(html, css, js, img, svg, fonts, files)
-export { mainTasks }
 
-const build = gulp.series(clean, mainTasks, gulp.parallel(server))
+const build = gulp.series(clean, mainTasks)
 export { build }
+
+const previewBuild = gulp.series(clean, mainTasks, gulp.parallel(server))
+export { previewBuild }
