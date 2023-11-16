@@ -44,7 +44,6 @@ const plumberNotify = (addTitle) => {
 // html task
 const html = () => {
   return gulp.src(`${srcFolder}html/*.html`)
-    .pipe(gulpChanged(`${destFolder}`))
     .pipe(gulpPlumber(plumberNotify('html')))
     .pipe(gulpFileInclude({
       prefix: '@',
@@ -60,7 +59,6 @@ export { html }
 // css task
 const css = () => {
   return gulp.src(`${srcFolder}scss/*.scss`)
-    .pipe(gulpChanged(`${destFolder}/css/`))
     .pipe(gulpPlumber(plumberNotify('css')))
     .pipe(dartSass())
     .pipe(gulpWebpCss())
@@ -81,7 +79,6 @@ export { css }
 // js task
 const js = () => {
   return gulp.src(`${srcFolder}js/*.js`)
-    .pipe(gulpChanged(`${destFolder}js/`))
     .pipe(gulpPlumber(plumberNotify('js')))
     .pipe(gulpBabel())
     .pipe(webpackStream({
