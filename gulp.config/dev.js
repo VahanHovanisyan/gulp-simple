@@ -1,22 +1,28 @@
+// global plugins
 import gulp from "gulp";
-import del from "del";
-import gulpFileInclude from "gulp-file-include";
-import gulpTypograf from "gulp-typograf";
 import gulpNotify from "gulp-notify";
 import gulpPlumber from "gulp-plumber";
-import webpackStream from "webpack-stream";
 import gulpChanged from "gulp-changed";
-import gulpSvgSprite from "gulp-svg-sprite";
+// plugin for delete docs folder
+import del from "del";
+// plugin for server
 import browserSync from "browser-sync";
+// plugins for html
+import gulpFileInclude from "gulp-file-include";
+import gulpTypograf from "gulp-typograf";
+// plugins for css
 import gulpRename from "gulp-rename";
-import gulpSassGlob from "gulp-sass-glob"
 import gulpSass from "gulp-sass";
 import * as sass from 'sass';
-import changed from "gulp-changed";
 const dartSass = gulpSass(sass);
+// plugins for js
+import webpackStream from "webpack-stream";
+// plugins for svg
+import gulpSvgSprite from "gulp-svg-sprite";
+// path
 const srcFolder = './src/';
 const destFolder = './docs/';
-
+// config for plugins plumber and notify
 const plumberNotify = (addTitle) => {
   return {
     errorHandler: gulpNotify.onError(error => ({
@@ -25,7 +31,7 @@ const plumberNotify = (addTitle) => {
     }))
   }
 }
-
+// html task
 const html = () => {
   return gulp.src(`${srcFolder}html/*.html`)
     .pipe(gulpChanged(`${destFolder}`))
@@ -40,12 +46,11 @@ const html = () => {
     .pipe(gulp.dest(destFolder))
 }
 export { html }
-
+// css task
 const css = () => {
   return gulp.src(`${srcFolder}scss/*.scss`, { sourcemaps: true })
     .pipe(gulpChanged(`${destFolder}css/`))
     .pipe(gulpPlumber(plumberNotify('css')))
-    .pipe(gulpSassGlob())
     .pipe(dartSass())
     .pipe(gulpRename({
       suffix: ".min",
@@ -54,7 +59,7 @@ const css = () => {
     .pipe(gulp.dest(`${destFolder}css/`, { sourcemaps: true }))
 }
 export { css }
-
+// js task
 const js = () => {
   return gulp.src(`${srcFolder}js/*.js`)
     // .pipe(gulpChanged(`${destFolder}js/`))
@@ -81,7 +86,7 @@ const js = () => {
     .pipe(gulp.dest(`${destFolder}js/`))
 }
 export { js }
-
+// img task
 const img = () => {
   return gulp.src(`${srcFolder}img/**/*.{jpeg,jpg,png,gif,ico,webp,webmanifest,xml,json}`)
     .pipe(gulpChanged(`${destFolder}img/`))
@@ -89,7 +94,7 @@ const img = () => {
     .pipe(gulp.dest(`${destFolder}img/`))
 }
 export { img }
-
+// svg task
 const svg = () => {
   return gulp.src(`${srcFolder}svg/**/*.svg`)
     .pipe(gulpChanged(`${destFolder}img/svg`))
@@ -105,21 +110,21 @@ const svg = () => {
     .pipe(gulp.dest(`${destFolder}img/svg`))
 }
 export { svg }
-
+// fonts task
 const fonts = () => {
   return gulp.src(`${srcFolder}fonts/**/*.{woff,woff2}`)
     .pipe(gulpChanged(`${destFolder}fonts/`))
     .pipe(gulp.dest(`${destFolder}fonts/`))
 }
 export { fonts }
-
+// files task
 const files = () => {
   return gulp.src(`${srcFolder}files/**/*.*`)
     .pipe(gulpChanged(`${destFolder}files/`))
     .pipe(gulp.dest(`${destFolder}files/`))
 }
 export { files }
-
+// browser-sync server
 const server = () => {
   browserSync.init({
     server: {
@@ -128,12 +133,12 @@ const server = () => {
   })
 }
 export { server }
-
+// task for delete docs folder
 const clean = () => {
   return del(destFolder)
 }
 export { clean }
-
+// task to view changes to all tasks
 const watcher = () => {
   gulp.watch(`${srcFolder}files/**/*.*`).on("all", browserSync.reload)
   gulp.watch(`${srcFolder}html/**/*.html`, html).on("all", browserSync.reload)
@@ -146,7 +151,6 @@ const watcher = () => {
 export { watcher }
 
 const mainTasks = gulp.parallel(html, css, js, img, svg, fonts, files);
-
-
+// npm run dev
 const dev = gulp.series(clean, mainTasks, gulp.parallel(server, watcher));
 export { dev }

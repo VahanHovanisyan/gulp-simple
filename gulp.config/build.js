@@ -1,29 +1,38 @@
+// global plugins
 import gulp from "gulp";
+import gulpNotify from "gulp-notify";
+import gulpPlumber from "gulp-plumber";
+import gulpChanged from "gulp-changed";
+// plugin for delete destFolder
 import del from "del";
+// plugin for server
 import browserSync from "browser-sync";
+// plugins for html
 import gulpFileInclude from "gulp-file-include";
 import gulpTypograf from "gulp-typograf";
 import gulpWebpHtml from "gulp-webp-html";
+// plugins for css
 import gulpGroupCssMediaQueries from "gulp-group-css-media-queries";
-import gulpNotify from "gulp-notify";
-import gulpPlumber from "gulp-plumber";
-import webpackStream from "webpack-stream";
-import gulpChanged from "gulp-changed";
-import gulpBabel from "gulp-babel";
-import imagemin from "gulp-imagemin";
-import gulpWebp from "gulp-webp";
-import gulpSvgSprite from "gulp-svg-sprite";
 import gulpCsso from "gulp-csso";
 import gulpRename from "gulp-rename";
 import gulpAutoprefixer from "gulp-autoprefixer";
 import gulpWebpCss from "gulp-webp-css";
-import gulpSassGlob from "gulp-sass-glob"
 import gulpSass from "gulp-sass";
 import * as sass from 'sass';
 const dartSass = gulpSass(sass);
+// plugins for js
+import webpackStream from "webpack-stream";
+import gulpBabel from "gulp-babel";
+// plugins for img
+import imagemin from "gulp-imagemin";
+import gulpWebp from "gulp-webp";
+// plugins for svg
+import gulpSvgSprite from "gulp-svg-sprite";
+
+// path
 const srcFolder = './src/';
 const destFolder = './docs/';
-
+// config for plugins plumber and notify
 const plumberNotify = (addTitle) => {
   return {
     errorHandler: gulpNotify.onError(error => ({
@@ -32,7 +41,7 @@ const plumberNotify = (addTitle) => {
     }))
   }
 }
-
+// html task
 const html = () => {
   return gulp.src(`${srcFolder}html/*.html`)
     .pipe(gulpChanged(`${destFolder}`))
@@ -48,12 +57,11 @@ const html = () => {
     .pipe(gulp.dest(destFolder))
 }
 export { html }
-
+// css task
 const css = () => {
   return gulp.src(`${srcFolder}scss/*.scss`)
     .pipe(gulpChanged(`${destFolder}/css/`))
     .pipe(gulpPlumber(plumberNotify('css')))
-    .pipe(gulpSassGlob())
     .pipe(dartSass())
     .pipe(gulpWebpCss())
     .pipe(gulpGroupCssMediaQueries())
@@ -70,7 +78,7 @@ const css = () => {
     .pipe(gulp.dest(`${destFolder}css/`))
 }
 export { css }
-
+// js task
 const js = () => {
   return gulp.src(`${srcFolder}js/*.js`)
     .pipe(gulpChanged(`${destFolder}js/`))
@@ -99,7 +107,7 @@ const js = () => {
     .pipe(gulp.dest(`${destFolder}js/`))
 }
 export { js }
-
+// img task
 const img = () => {
   return gulp.src(`${srcFolder}img/**/*.{jpeg,jpg,png,gif,ico,webp,webmanifest,xml,json}`)
     .pipe(gulpChanged(`${destFolder}img/`))
@@ -112,7 +120,7 @@ const img = () => {
     .pipe(gulp.dest(`${destFolder}img/`))
 }
 export { img }
-
+// svg task
 const svg = () => {
   return gulp.src(`${srcFolder}svg/**/*.svg`)
     .pipe(gulpChanged(`${destFolder}img/svg/`))
@@ -127,26 +135,26 @@ const svg = () => {
     .pipe(gulp.dest(`${destFolder}img/svg`))
 }
 export { svg }
-
+// fonts task
 const fonts = () => {
   return gulp.src(`${srcFolder}fonts/**/*.{woff,woff2}`)
     .pipe(gulpChanged(`${destFolder}fonts/`))
     .pipe(gulp.dest(`${destFolder}fonts/`))
 }
 export { fonts }
-
+// files task
 const files = () => {
   return gulp.src(`${srcFolder}files/**/*.*`)
     .pipe(gulpChanged(`${destFolder}files/`))
     .pipe(gulp.dest(`${destFolder}files/`))
 }
 export { files }
-
+// delete docs dir
 const clean = () => {
   return del(destFolder)
 }
 export { clean }
-
+// browser-sync server
 const server = () => {
   browserSync.init({
     server: {
@@ -157,9 +165,9 @@ const server = () => {
 export { server }
 
 const mainTasks = gulp.parallel(html, css, js, img, svg, fonts, files)
-
+// npm run build
 const build = gulp.series(clean, mainTasks)
 export { build }
-
+// npm run preview
 const previewBuild = gulp.series(clean, mainTasks, gulp.parallel(server))
 export { previewBuild }

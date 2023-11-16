@@ -1,15 +1,15 @@
-@import "./config-scss/vars.scss";
-@import "./config-scss/mixin.scss";
-@import "./config-scss/fonts.scss";
-@import "./config-scss/global.scss";
-@import "./config-scss/mix-class.scss";
-@import "./common.blocks/page.scss";
-@import "./common.blocks/page__body.scss";
-@import "./common.blocks/header.scss";
-@import "./common.blocks/main.scss";
+@import "./config-scss/vars.scss";// vars
+@import "./config-scss/mixin.scss";// mixin
+@import "./config-scss/fonts.scss";// fonts
+@import "./config-scss/global.scss";// global
+@import "./config-scss/mix-class.scss";// mix-class
+@import "./common.blocks/page.scss";// page
+@import "./common.blocks/page__body.scss";// page__body
+@import "./common.blocks/header.scss";// header
+@import "./common.blocks/main.scss";// main
 
 // sections
-@import "./common.blocks/hero.scss";
+@import "./common.blocks/hero.scss";// hero
 // /sections
 
-@import "./common.blocks/footer.scss";
+@import "./common.blocks/footer.scss";// footer
