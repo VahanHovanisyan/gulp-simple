@@ -10,7 +10,7 @@ import browserSync from "browser-sync";
 // plugins for html
 import gulpFileInclude from "gulp-file-include";
 import gulpTypograf from "gulp-typograf";
-import gulpWebpHtml from "gulp-webp-html";
+import gulpWebpHtml from "gulp-webp-html-nosvg";
 // plugins for css
 import gulpGroupCssMediaQueries from "gulp-group-css-media-queries";
 import gulpCsso from "gulp-csso";
@@ -106,12 +106,12 @@ const js = () => {
 export { js }
 // img task
 const img = () => {
-  return gulp.src(`${srcFolder}img/**/*.{jpeg,jpg,png,gif,ico,webp,webmanifest,xml,json}`)
+  return gulp.src(`${srcFolder}img/**/*.{jpeg,jpg,png,gif,ico,webp,webmanifest,xml,json,svg}`)
     .pipe(gulpChanged(`${destFolder}img/`))
     .pipe(gulpPlumber(plumberNotify('img')))
     .pipe(gulpWebp())
     .pipe(gulp.dest(`${destFolder}img/`))
-    .pipe(gulp.src(`${srcFolder}img/**/*.{jpeg,jpg,png,gif,ico,webp,webmanifest,xml,json}`))
+    .pipe(gulp.src(`${srcFolder}img/**/*.{jpeg,jpg,png,gif,ico,webp,webmanifest,xml,json,svg}`))
     .pipe(gulpChanged(`${destFolder}img/`))
     .pipe(imagemin({ verbose: true }))
     .pipe(gulp.dest(`${destFolder}img/`))

@@ -1,5 +1,3 @@
-
-
 .container {
 	margin: 0 auto;
 	padding: 0 var(--container-offset);
@@ -69,8 +67,4 @@
 
 .js-focus-visible :focus:not(.focus-visible) {
 	outline: none;
-}
-
-.page_ios .dis-scroll {
-	position: relative;
 }

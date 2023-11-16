@@ -35,7 +35,7 @@
     "gulp-typograf": "^4.1.0",
     "gulp-webp": "^5.0.0",
     "gulp-webp-css": "^1.1.0",
-    "gulp-webp-html": "^1.0.2",
+    "gulp-webp-html-nosvg": "^1.1.1",
     "sass": "^1.69.5",
     "style-loader": "^3.3.3",
     "webpack": "^5.89.0",

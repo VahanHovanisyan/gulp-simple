@@ -85,7 +85,7 @@ const js = () => {
 export { js }
 // img task
 const img = () => {
-  return gulp.src(`${srcFolder}img/**/*.{jpeg,jpg,png,gif,ico,webp,webmanifest,xml,json}`)
+  return gulp.src(`${srcFolder}img/**/*.{jpeg,jpg,png,gif,ico,webp,webmanifest,xml,json,svg}`)
     .pipe(gulpChanged(`${destFolder}img/`))
     .pipe(gulpPlumber(plumberNotify('img')))
     .pipe(gulp.dest(`${destFolder}img/`))
