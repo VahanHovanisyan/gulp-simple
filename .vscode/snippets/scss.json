@@ -6,7 +6,7 @@
 			"*,*:before,*:after{box-sizing:inherit}",
 			"html{box-sizing:border-box}"
 		],
-		"description": "обнуление стилей по бем"
+		"description": "reset styles"
 	},
 	"magic transition": {
 		"scope": "scss",
@@ -29,7 +29,7 @@
 	"margin auto": {
 		"scope": "scss",
 		"prefix": "m",
-		"body": "margin: 0px auto;",
+		"body": "margin: 0 auto;",
 		"description": "margin auto"
 	},
 	"media 1440px": {
@@ -68,21 +68,21 @@
 		"body": "@media(max-width:575.98px){$1}",
 		"description": "Extra small devices (portrait phones, less than 576px)"
 	},
-	"внешний отступ": {
+	"margin": {
 		"scope": "scss",
 		"prefix": "mm",
 		"body": [
 			"margin: 0 0 0 0;"
 		],
-		"description": "внешний отступ"
+		"description": "margin"
 	},
-	"внутрений отступ": {
+	"padding": {
 		"scope": "scss",
 		"prefix": "pp",
 		"body": [
 			"padding: 0 0 0 0;"
 		],
-		"description": "внутрений отступ"
+		"description": "padding"
 	},
 	"adaptive calc": {
 		"scope": "scss",
@@ -149,7 +149,11 @@
 		"scope": "scss",
 		"prefix": "hover",
 		"body": [
-			"@include hover{};"
+			"@include hover{",
+				"&:hover {",
+					"$1",
+				"}",
+			"};"
 		],
 		"description": "hover"
 	},

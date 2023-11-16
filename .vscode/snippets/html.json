@@ -65,7 +65,7 @@
 			"  <label class=\"form__label\">",
 			"    <input type=\"text\" name=\"Имя\" class=\"input-reset form__input\" placeholder=\"Имя\">",
 			"  </label>",
-			"  <button class=\"btn-reset form__btn\">Отправить</button>",
+			"  <button class=\"btn-reset form__btn\">send</button>",
 			"</form>"
 		],
 		"description": "Snippet for basic form"
@@ -109,7 +109,7 @@
 			"  <img loading=\"lazy\" src=\"$1.$2\" class=\"image\" width=\"$4\" height=\"$5\" alt=\"$3\">",
 			"</picture>"
 		],
-		"description": "Snippet for basic logo structure"
+		"description": "Snippet for basic picture structure"
 	},
 	"svgimg": {
 		"scope": "html",
@@ -117,7 +117,7 @@
 		"body": [
 			"<img loading=\"lazy\" src=\"$1.$2\" class=\"image\" width=\"$4\" height=\"$5\" alt=\"$3\">"
 		],
-		"description": "Snippet for simple html svg images"
+		"description": "Snippet for simple html images"
 	},
 	"tooltip": {
 		"prefix": "tooltip",
@@ -125,7 +125,7 @@
 			"<span class=\"tooltip\">",
 			"  <button class=\"tooltip__btn\" aria-describedby=\"$1\">$2</button>",
 			"  <span class=\"tooltip__txt\" role=\"tooltip\" id=\"$1\">",
-			"    <span class=\"visually-hidden\">Тултип: </span>",
+			"    <span class=\"visually-hidden\">tooltip: </span>",
 			"    $3",
 			"  </span>",
 			"</span>"
