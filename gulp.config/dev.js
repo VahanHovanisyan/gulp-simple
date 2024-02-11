@@ -1,3 +1,5 @@
+import webpackConfig from "../webpack.config.js";
+
 // global plugins
 import gulp from "gulp";
 import gulpNotify from "gulp-notify";
@@ -63,11 +65,7 @@ const js = () => {
     .pipe(gulpPlumber(plumberNotify('js')))
     .pipe(webpackStream({
       mode: 'development',
-      entry: {
-        index: './src/js/index.js'
-        // contacts: './src/js/contacts.js',
-        // about: './src/js/about.js',
-      },
+      entry: webpackConfig,
       output: {
         filename: '[name].min.js',
       },

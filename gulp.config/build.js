@@ -1,3 +1,5 @@
+import webpackConfig from "../webpack.config.js";
+
 // global plugins
 import gulp from "gulp";
 import gulpNotify from "gulp-notify";
@@ -12,11 +14,11 @@ import gulpFileInclude from "gulp-file-include";
 import gulpTypograf from "gulp-typograf";
 import gulpWebpHtml from "gulp-webp-html-nosvg";
 // plugins for css
-import gulpGroupCssMediaQueries from "gulp-group-css-media-queries";
+// import gulpGroupCssMediaQueries from "gulp-group-css-media-queries";
 import gulpCsso from "gulp-csso";
 import gulpRename from "gulp-rename";
 import gulpAutoprefixer from "gulp-autoprefixer";
-import gulpWebpCss from "gulp-webp-css";
+// import gulpWebpCss from "gulp-webp-css";
 import gulpSass from "gulp-sass";
 import * as sass from 'sass';
 const dartSass = gulpSass(sass);
@@ -61,8 +63,8 @@ const css = () => {
   return gulp.src(`${srcFolder}scss/*.scss`)
     .pipe(gulpPlumber(plumberNotify('css')))
     .pipe(dartSass())
-    .pipe(gulpWebpCss())
-    .pipe(gulpGroupCssMediaQueries())
+    // .pipe(gulpWebpCss())
+    // .pipe(gulpGroupCssMediaQueries())
     .pipe(gulpAutoprefixer({
       cascade: false,
       grid: true,
@@ -83,11 +85,7 @@ const js = () => {
     .pipe(gulpBabel())
     .pipe(webpackStream({
       mode: 'production',
-      entry: {
-        index: './src/js/index.js'
-        // contacts: './src/js/contacts.js',
-        // about: './src/js/about.js',
-      },
+      entry: webpackConfig,
       output: {
         filename: '[name].min.js',
       },
