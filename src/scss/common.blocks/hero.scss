@@ -1,3 +1,7 @@
 .hero {
 	background-color: blueviolet;
+
+	@media(min-width:768px){
+		background-color: blue;
+	}
 }

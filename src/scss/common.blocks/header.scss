@@ -7,4 +7,7 @@
 			justify-content: space-between;
 			@include burger-X(40px,40px,2px,#000,1200px);
 		}
+		@media(min-width:768px){
+			background-color: green;
+		}
 }

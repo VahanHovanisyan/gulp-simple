@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 export class Accordion {
   constructor(accordionElem, options) {
     let defaultOptions = {

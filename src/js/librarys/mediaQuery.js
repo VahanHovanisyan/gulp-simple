@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 export class MediaQueryHandler {
   constructor(options) {
     let defaultOptions = {

@@ -5,6 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+		"devphp": "gulp dev --php",
+		"buildphp": "gulp build --production --php",
     "dev": "gulp dev",
     "build": "gulp build --production",
     "preview": "gulp previewBuild --production"
@@ -15,9 +17,12 @@
   "devDependencies": {
     "@babel/core": "^7.23.3",
     "@babel/preset-env": "^7.23.3",
+    "@eslint/js": "^9.6.0",
     "browser-sync": "^2.29.3",
     "css-loader": "^6.8.1",
     "del": "^6.0.0",
+    "eslint": "9.x",
+    "globals": "^15.6.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^9.0.0",
     "gulp-babel": "^8.0.0",

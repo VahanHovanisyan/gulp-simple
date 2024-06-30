@@ -1,8 +1,9 @@
 .footer {
     background-color: brown;
-}
-@media (max-width:575.98px) {
-    .footer {
-        background-color: rgb(13, 181, 27);
-    }
+		position: relative;
+		display: flex;
+
+		@media(min-width:768px){
+			background-color: darkcyan;
+		}
 }

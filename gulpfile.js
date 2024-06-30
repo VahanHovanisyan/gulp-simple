@@ -1,5 +1,7 @@
-// passing values ​​to global variable
+// rest of the code
 const IS_BUILD = process.argv.includes("--production");
+const IS_PHP = process.argv.includes("--php");
+const domen = "crud";
 
 // global plugins
 import gulp from "gulp";
@@ -26,7 +28,7 @@ import gulpRename from "gulp-rename";
 import gulpAutoprefixer from "gulp-autoprefixer";
 // import gulpWebpCss from "gulp-webp-css";
 import gulpSass from "gulp-sass";
-import * as sass from 'sass';
+import * as sass from "sass";
 const dartSass = gulpSass(sass);
 
 // plugins for js
@@ -42,165 +44,234 @@ import gulpWebp from "gulp-webp";
 import gulpSvgSprite from "gulp-svg-sprite";
 
 // path
-const srcFolder = './src/';
-const destFolder = './docs/';
+const srcFolder = "./src/";
+const destFolder = "./docs/";
 
 // config for plugins plumber and notify
 const plumberNotify = (addTitle) => {
 	return {
-		errorHandler: gulpNotify.onError(error => ({
+		errorHandler: gulpNotify.onError((error) => ({
 			title: addTitle,
-			message: error.message
-		}))
-	}
+			message: error.message,
+		})),
+	};
+};
+
+// php task
+export const php = () => {
+	return gulp
+		.src(`${srcFolder}php/**/*.php`)
+		.pipe(gulpPlumber(plumberNotify("php")))
+		.pipe(
+			gulpFileInclude({
+				prefix: "@",
+				basepath: "@file",
+			})
+		)
+		.pipe(gulpIf(IS_BUILD, gulpWebpHtml()))
+		.pipe(
+			gulpTypograf({
+				locale: ["ru", "en-US"],
+			})
+		)
+		.pipe(gulp.dest(destFolder));
 };
 
 // html task
-const html = () => {
-	return gulp.src(`${srcFolder}html/*.html`)
-		.pipe(gulpPlumber(plumberNotify('html')))
-		.pipe(gulpFileInclude({
-			prefix: '@',
-			basepath: '@file'
-		}))
+export const html = () => {
+	return gulp
+		.src(`${srcFolder}html/*.html`)
+		.pipe(gulpPlumber(plumberNotify("html")))
+		.pipe(
+			gulpFileInclude({
+				prefix: "@",
+				basepath: "@file",
+			})
+		)
 		.pipe(gulpIf(IS_BUILD, gulpWebpHtml()))
-		.pipe(gulpTypograf({
-			locale: ['ru', 'en-US']
-		}))
-		.pipe(gulp.dest(destFolder))
+		.pipe(
+			gulpTypograf({
+				locale: ["ru", "en-US"],
+			})
+		)
+		.pipe(gulp.dest(destFolder));
 };
-export { html };
 
 // css task
-const css = () => {
-	return gulp.src(`${srcFolder}scss/*.scss`, { sourcemaps: IS_BUILD ? false : true })
-		.pipe(gulpPlumber(plumberNotify('css')))
-		.pipe(dartSass())
-		// .pipe(gulpWebpCss())
-		.pipe(gulpGroupCssMediaQueries())
+export const css = () => {
+	return (
+		gulp
+			.src(`${srcFolder}scss/*.scss`, { sourcemaps: IS_BUILD ? false : true })
+			.pipe(gulpPlumber(plumberNotify("css")))
+			.pipe(dartSass())
+			// .pipe(gulpWebpCss())
+			.pipe(gulpGroupCssMediaQueries())
 
-		.pipe(gulpIf(IS_BUILD, gulpAutoprefixer({
-			cascade: false,
-			overrideBrowserslist: ["last 5 versions"]
-		})))
-		.pipe(gulpIf(IS_BUILD, gulpCsso()))
-		.pipe(gulpRename({
-			suffix: ".min",
-			extname: ".css"
-		}))
-		.pipe(gulp.dest(`${destFolder}css/`, { sourcemaps: IS_BUILD ? false : true }))
+			.pipe(
+				gulpIf(
+					IS_BUILD,
+					gulpAutoprefixer({
+						cascade: false,
+						overrideBrowserslist: ["last 5 versions"],
+					})
+				)
+			)
+			.pipe(gulpIf(IS_BUILD, gulpCsso()))
+			.pipe(
+				gulpRename({
+					suffix: ".min",
+					extname: ".css",
+				})
+			)
+			.pipe(
+				gulp.dest(`${destFolder}css/`, { sourcemaps: IS_BUILD ? false : true })
+			)
+	);
 };
-export { css };
 
 // js task
-const js = () => {
-	return gulp.src(`${srcFolder}js/*.js`)
-		.pipe(gulpPlumber(plumberNotify('js')))
+export const js = () => {
+	return gulp
+		.src(`${srcFolder}js/*.js`)
+		.pipe(gulpPlumber(plumberNotify("js")))
 		.pipe(gulpBabel())
-		.pipe(webpackStream({
-			mode: IS_BUILD ? "production" : "development",
-			entry: webpackConfig,
-			output: {
-				filename: '[name].min.js',
-			},
-			module: {
-				rules: [
-					{
-						test: /\.css$/,
-						use: ['style-loader', 'css-loader'],
-					},
-				],
-			},
-		}))
+		.pipe(
+			webpackStream({
+				mode: IS_BUILD ? "production" : "development",
+				entry: webpackConfig,
+				output: {
+					filename: "[name].min.js",
+				},
+				module: {
+					rules: [
+						{
+							test: /\.css$/,
+							use: ["style-loader", "css-loader"],
+						},
+					],
+				},
+			})
+		)
 
-		.pipe(gulp.dest(`${destFolder}js/`))
+		.pipe(gulp.dest(`${destFolder}js/`));
 };
-export { js };
+
+const imgExt = [
+	"jpeg",
+	"jpg",
+	"png",
+	"gif",
+	"ico",
+	"webp",
+	"webmanifest",
+	"xml",
+	"json",
+	"svg",
+].join(",");
 
 // img task
-const img = () => {
-	return gulp.src(`${srcFolder}img/**/*.{jpeg,jpg,png,gif,ico,webp,webmanifest,xml,json,svg}`)
+export const img = () => {
+	return gulp
+		.src(`${srcFolder}img/**/*.{${imgExt}}`)
 		.pipe(gulpChanged(`${destFolder}img/`))
-		.pipe(gulpPlumber(plumberNotify('img')))
+		.pipe(gulpPlumber(plumberNotify("img")))
 		.pipe(gulpIf(IS_BUILD, gulpWebp()))
 		.pipe(gulpIf(IS_BUILD, gulp.dest(`${destFolder}img/`)))
-		.pipe(gulpIf(IS_BUILD, gulp.src(`${srcFolder}img/**/*.{jpeg,jpg,png,gif,ico,webp,webmanifest,xml,json,svg}`)))
+		.pipe(gulpIf(IS_BUILD, gulp.src(`${srcFolder}img/**/*.{${imgExt}}`)))
 		.pipe(gulpIf(IS_BUILD, gulpChanged(`${destFolder}img/`)))
 		.pipe(gulpIf(IS_BUILD, imagemin({ verbose: true })))
-		.pipe(gulp.dest(`${destFolder}img/`))
+		.pipe(gulp.dest(`${destFolder}img/`));
 };
-export { img };
 
 // svg task
-const svg = () => {
-	return gulp.src(`${srcFolder}svg/**/*.svg`)
+export const svg = () => {
+	return gulp
+		.src(`${srcFolder}svg/**/*.svg`)
 		.pipe(gulpChanged(`${destFolder}img/svg/`))
-		.pipe(gulpPlumber(plumberNotify('svg')))
-		.pipe(gulpSvgSprite({
-			mode: {
-				stack: {
-					sprite: `../sprite.svg`,
+		.pipe(gulpPlumber(plumberNotify("svg")))
+		.pipe(
+			gulpSvgSprite({
+				mode: {
+					stack: {
+						sprite: `../sprite.svg`,
+					},
 				},
-			}
-		}))
-		.pipe(gulp.dest(`${destFolder}img/svg`))
+			})
+		)
+		.pipe(gulp.dest(`${destFolder}img/svg`));
 };
-export { svg };
 
 // fonts task
-const fonts = () => {
-	return gulp.src(`${srcFolder}fonts/**/*.{woff,woff2}`)
+export const fonts = () => {
+	return gulp
+		.src(`${srcFolder}fonts/**/*.{woff,woff2}`)
 		.pipe(gulpChanged(`${destFolder}fonts/`))
-		.pipe(gulp.dest(`${destFolder}fonts/`))
+		.pipe(gulp.dest(`${destFolder}fonts/`));
 };
-export { fonts };
 
 // files task
-const files = () => {
-	return gulp.src(`${srcFolder}files/**/*.*`)
+export const files = () => {
+	return gulp
+		.src(`${srcFolder}files/**/*.*`)
 		.pipe(gulpChanged(`${destFolder}files/`))
-		.pipe(gulp.dest(`${destFolder}files/`))
+		.pipe(gulp.dest(`${destFolder}files/`));
 };
-export { files };
 
 // delete docs dir
-const clean = () => {
+export const clean = () => {
 	return del(destFolder);
 };
-export { clean };
 
 // browser-sync server
-const server = () => {
-	browserSync.init({
-		server: {
-			baseDir: destFolder
-		}
-	});
+export const server = () => {
+	IS_PHP
+		? browserSync.init({
+				proxy: domen,
+		})
+		: browserSync.init({
+				server: {
+					baseDir: destFolder,
+				},
+		});
 };
-export { server };
 
 // task to view changes to all tasks
-const watcher = () => {
+export const watcher = () => {
 	gulp.watch(`${srcFolder}files/**/*.*`).on("all", browserSync.reload);
+	gulp.watch(`${srcFolder}php/**/*.php`, php).on("all", browserSync.reload);
 	gulp.watch(`${srcFolder}html/**/*.html`, html).on("all", browserSync.reload);
 	gulp.watch(`${srcFolder}scss/**/*.scss`, css).on("all", browserSync.reload);
 	gulp.watch(`${srcFolder}js/**/*.js`, js).on("all", browserSync.reload);
-	gulp.watch(`${srcFolder}img/**/*.{jpeg,jpg,png,gif,ico,webp,webmanifest,xml,json}`, img).on("all", browserSync.reload);
+	gulp
+		.watch(`${srcFolder}img/**/*.{${imgExt}}`, img)
+		.on("all", browserSync.reload);
 	gulp.watch(`${srcFolder}svg/**/*.svg`, svg).on("all", browserSync.reload);
 	gulp.watch(`${srcFolder}fonts/**/*.*`, fonts).on("all", browserSync.reload);
 };
-export { watcher };
 
-const mainTasks = gulp.parallel(html, css, js, img, svg, fonts, files);
+const mainTasks = gulp.parallel(
+	IS_PHP ? php : html,
+	css,
+	js,
+	img,
+	svg,
+	fonts,
+	files
+);
 
 // npm run dev
-const dev = gulp.series(clean, mainTasks, gulp.parallel(server, watcher));
-export { dev };
+export const dev = gulp.series(
+	clean,
+	mainTasks,
+	gulp.parallel(server, watcher)
+);
 
 // npm run build
-const build = gulp.series(clean, mainTasks);
-export { build };
+export const build = gulp.series(clean, mainTasks);
 
 // npm run preview
-const previewBuild = gulp.series(clean, mainTasks, gulp.parallel(server));
-export { previewBuild };
+export const previewBuild = gulp.series(
+	clean,
+	mainTasks,
+	gulp.parallel(server)
+);

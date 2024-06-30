@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 export const disableScroll = () => {
     const fixBlocks = document?.querySelectorAll('.fixed-block');
     const pagePosition = window.scrollY;
