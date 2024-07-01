@@ -1,89 +1,40 @@
-<?php
-require_once "config/connect.php";
-?>
-
 <!DOCTYPE html>
-<html lang="en">
-
+<html class="page" lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>products</title>
-  <style>
-    th,td {
-      padding: 10px;
-      color: #fff;
-    }
-    th {
-      background-color: #606060;
-
-    }
-    td {
-      background-color: gray;
-    }
-    .form {
-      max-width: 400px;
-    }
-    .form__label {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-  </style>
+  <link rel="stylesheet" href="css/index.min.css">
+  <title>Document</title>
 </head>
-
-<body>
-
-<h1>gulp php</h1>
-
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      <? php $products = mysqli_query ($connect, «SELECT * FROM `products`»);
-        $products = mysqli_fetch_all ($products);
-        foreach ($products as $product) {
-     ? >
-
-      <tr>
-        <td><? = $product[0]? ></td>
-        <td><? = $product[1]? ></td>
-        <td><? = $product[3]? ></td>
-        <td><? = $product[2]? ></td>
-        <td><a href="product.php?id=<?= $product[0] ?>«>view</a></td>
-        <td><a href="update.php?id=<?= $product[0] ?>„>update</a></td>
-        <td><a style="color: red;" href="vendor/delete.php?id=<?= $product[0] ?>„>delete</a></td>
-      </tr>
-
-      <? php
-        }
-     ? >
-
-    </tbody>
-  </table>
-
-  <form action="vendor/create.php" method="post" class="form">
-    <label class="form__label">
-      Title
-      <input type="text" name="title" class="input-reset form__input">
-    </label>
-    <label class="form__label">
-      Description
-      <textarea name="descr" ></textarea>
-    </label>
-    <label class="form__label">
-      Price
-      <input type="number" name="price" class="input-reset form__input">
-    </label>
-    <button class="btn-reset form__btn">add new product</button>
-  </form>
-
+<body class="page__body">
+  <header class="header">
+  <div class="header__container container">
+        <nav class="nav" data-nav title="navigation" aria-label="navigation list links">
+            <ul class="nav__list">
+                <li class="nav__item" data-nav-item><a href="#" class="nav__link">item</a></li>
+                <li class="nav__item" data-nav-item><a href="#" class="nav__link">item</a></li>
+                <li class="nav__item" data-nav-item><a href="#" class="nav__link">item</a></li>
+            </ul>
+        </nav>
+    <button class="burger" aria-label="open menu" aria-expanded="false" data-burger>
+            <span class="burger__line burger__line_top"></span>
+            <span class="burger__line burger__line_middle"></span>
+            <span class="burger__line burger__line_bottom"></span>
+        </button>
+  </div>
+</header>
+  <main class="main">
+    <section class="hero">
+    <div class="hero__container container">
+        hero section
+    </div>
+</section>
+  </main>
+  <footer class="footer">
+  <div class="footer__container container">
+    footer
+  </div>
+</footer>
+  <script src="js/index.min.js"></script>
 </body>
-
 </html>

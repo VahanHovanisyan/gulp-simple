@@ -3,8 +3,8 @@ export class Accordion {
   constructor(accordionElem, options) {
     let defaultOptions = {
       speed: 500,
-      turn: false
-    }
+      turn: false,
+    };
     this.accordion = document.querySelector(`[data-accordion="${accordionElem}"]`);
     this.options = Object.assign(defaultOptions, options);
     this.allAccordionCollapse = this.accordion.querySelectorAll('.accordion__collapse');
@@ -17,20 +17,20 @@ export class Accordion {
   }
 
   initialize() {
-    this.allAccordionCollapse.forEach(collapseElement => {
+    this.allAccordionCollapse.forEach((collapseElement) => {
       collapseElement?.setAttribute('id', 'accordion__collapse');
       collapseElement.hidden = true;
       if (collapseElement.classList.contains('accordion__collapse_open')) {
-        this.toggleSlide(collapseElement)
+        this.toggleSlide(collapseElement);
       }
     });
 
-    this.allAccordionButton.forEach(buttonElement => {
+    this.allAccordionButton.forEach((buttonElement) => {
       buttonElement.setAttribute('aria-expanded', 'false');
       buttonElement.setAttribute('aria-controls', 'accordion__collapse');
     });
   }
-  hideEl = element => {
+  hideEl = (element) => {
     if (element && !element.classList.contains('collapse')) {
       element.classList.add('collapse');
       element.classList.remove('accordion__collapse_open');
@@ -62,7 +62,7 @@ export class Accordion {
   };
 
   toggleSlide(collapseElement, duration = this.options.speed) {
-    const hideElement = element => {
+    const hideElement = (element) => {
       if (element && !element.classList.contains('collapse')) {
         element.classList.add('collapse');
         element.classList.remove('accordion__collapse_open');
@@ -93,7 +93,7 @@ export class Accordion {
       }
     };
 
-    const showElement = element => {
+    const showElement = (element) => {
       if (element && !element.classList.contains('collapse')) {
         element.classList.add('collapse');
         element.classList.add('accordion__collapse_open');
@@ -144,10 +144,10 @@ export class Accordion {
 
       // turn == true
       if (accordionCollapse?.classList.contains('accordion__collapse_open') && this.options.turn) {
-        this.allAccordionCollapse.forEach(collapseElement => {
+        this.allAccordionCollapse.forEach((collapseElement) => {
           this.hideEl(collapseElement);
         });
-        accordionCollapse.hidden = false
+        accordionCollapse.hidden = false;
       }
     });
   }

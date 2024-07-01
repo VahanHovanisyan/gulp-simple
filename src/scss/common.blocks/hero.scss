@@ -1,7 +1,7 @@
 .hero {
-	background-color: blueviolet;
+  background-color: blueviolet;
 
-	@media(min-width:768px){
-		background-color: blue;
-	}
+  @media (min-width: 768px) {
+    background-color: blue;
+  }
 }
