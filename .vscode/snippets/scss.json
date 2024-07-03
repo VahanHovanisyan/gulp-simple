@@ -11,7 +11,7 @@
 	"magic transition": {
 		"scope": "scss",
 		"prefix": "tr",
-		"body": "transition: $1 0.3s ease 0s;",
+		"body": "transition: $1 $2s;",
 		"description": "transition"
 	},
 	"magic animation": {
@@ -135,7 +135,7 @@
 			"}",
 			"}"
 		],
-		"description": "burger X"
+		"description": "burger custom"
 	},
 	"burger custom x": {
 		"scope": "scss",
