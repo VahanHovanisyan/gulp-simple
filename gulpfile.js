@@ -72,11 +72,6 @@ export const php = () => {
       }),
     )
     .pipe(gulpIf(IS_BUILD, gulpWebpHtml()))
-    .pipe(
-      gulpTypograf({
-        locale: ['ru', 'en-US'],
-      }),
-    )
     .pipe(gulp.dest(destFolder));
 };
 
