@@ -117,6 +117,9 @@ importers:
       style-loader:
         specifier: ^3.3.3
         version: 3.3.4(webpack@5.92.1)
+      vinyl-ftp:
+        specifier: ^0.6.1
+        version: 0.6.1
       webpack:
         specifier: ^5.89.0
         version: 5.92.1
@@ -1661,6 +1664,9 @@ packages:
     engines: {node: ^14.13.1 || >=16.0.0}
     hasBin: true
 
+  cyclist@1.0.2:
+    resolution: {integrity: sha512-0sVXIohTfLqVIW3kb/0n6IiWF3Ifj5nm2XaSrLq2DI6fKIGa2fYAZdk917rUneaeLVpYfFcyXE2ft0fe3remsA==}
+
   d@1.0.2:
     resolution: {integrity: sha512-MOqHvMWF9/9MX6nza0KgvFH4HpMU0EF5uUDXqX/BtxtU8NfB0QzRtJ8Oe/6SuS4kbhyzVJwjd97EA4PKrzJ8bw==}
     engines: {node: '>=0.12'}
@@ -2323,6 +2329,10 @@ packages:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
+
+  ftp@0.3.10:
+    resolution: {integrity: sha512-faFVML1aBx2UoDStmLwv2Wptt4vw5x03xxX172nhA5Y5HBshW5JweqQ2W4xL4dezQTG8inJsuYcpPHHU3X5OTQ==}
+    engines: {node: '>=0.8.0'}
 
   function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
@@ -3641,6 +3651,9 @@ packages:
     resolution: {integrity: sha512-88em58dDVB/KzPEx1X0N3LwFfYZPyDc4B6eF38M1rk9VTZMbxXXgjugz8mmwpS9Ox4BDZ+t6t3QP5+/gazweIA==}
     engines: {node: '>=4'}
 
+  parallel-transform@1.2.0:
+    resolution: {integrity: sha512-P2vSmIu38uIlvdcU7fDkyrxj33gTUy/ABO5ZUbGowxNCopBq/OoD42bP4UmMrJoPyk4Uqf0mu3mtWBhHCZD8yg==}
+
   parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
     engines: {node: '>=6'}
@@ -4757,6 +4770,10 @@ packages:
     resolution: {integrity: sha512-vIu34EkyNyJxmP0jscNzWBSygh7VWhqun6RmqVfXePrOwi9lhvRs//dOaGOTRUQr4tx7/zd26Tk5WeSVZitgng==}
     engines: {node: '>= 0.10'}
 
+  vinyl-ftp@0.6.1:
+    resolution: {integrity: sha512-HVp7xuWx9xQC+tzsCCYCnpd3ZVXK8wa4sMEhdkiGY6rY7P1sIm71YkfLjzdYXGS4hseOiSBSS75jPxZBozol6A==}
+    engines: {node: '>=0.10.0'}
+
   vinyl-sourcemap@1.1.0:
     resolution: {integrity: sha512-NiibMgt6VJGJmyw7vtzhctDcfKch4e4n9TBeoWlirb7FMg9/1Ov9k+A5ZRAtywBpRPiyECvQRQllYM8dECegVA==}
     engines: {node: '>= 0.10'}
@@ -4864,6 +4881,9 @@ packages:
   xpath@0.0.34:
     resolution: {integrity: sha512-FxF6+rkr1rNSQrhUNYrAFJpRXNzlDoMxeXN5qI84939ylEv3qqPFKa85Oxr6tDaJKqwW6KKyo2v26TSv3k6LeA==}
     engines: {node: '>=0.6.0'}
+
+  xregexp@2.0.0:
+    resolution: {integrity: sha512-xl/50/Cf32VsGq/1R8jJE5ajH1yMCQkpmoS10QbFZWl2Oor4H0Me64Pu2yxvsRWK3m6soJbmGfzSR7BYmDcWAA==}
 
   xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
@@ -6806,6 +6826,8 @@ snapshots:
       bin-build: 3.0.0
       bin-wrapper: 4.1.0
 
+  cyclist@1.0.2: {}
+
   d@1.0.2:
     dependencies:
       es5-ext: 0.10.64
@@ -7657,6 +7679,11 @@ snapshots:
 
   fsevents@2.3.3:
     optional: true
+
+  ftp@0.3.10:
+    dependencies:
+      readable-stream: 1.1.14
+      xregexp: 2.0.0
 
   function-bind@1.1.2: {}
 
@@ -9176,6 +9203,12 @@ snapshots:
     dependencies:
       p-finally: 1.0.0
 
+  parallel-transform@1.2.0:
+    dependencies:
+      cyclist: 1.0.2
+      inherits: 2.0.4
+      readable-stream: 2.3.8
+
   parent-module@1.0.1:
     dependencies:
       callsites: 3.1.0
@@ -10395,6 +10428,15 @@ snapshots:
       vinyl: 2.2.1
       vinyl-sourcemap: 1.1.0
 
+  vinyl-ftp@0.6.1:
+    dependencies:
+      ftp: 0.3.10
+      minimatch: 3.1.2
+      object-assign: 4.1.1
+      parallel-transform: 1.2.0
+      through2: 2.0.5
+      vinyl: 2.2.1
+
   vinyl-sourcemap@1.1.0:
     dependencies:
       append-buffer: 1.0.2
@@ -10552,6 +10594,8 @@ snapshots:
   xmlhttprequest-ssl@2.0.0: {}
 
   xpath@0.0.34: {}
+
+  xregexp@2.0.0: {}
 
   xtend@4.0.2: {}
 

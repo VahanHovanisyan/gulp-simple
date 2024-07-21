@@ -1,7 +1,7 @@
 // rest of the code
 const IS_BUILD = process.argv.includes('--production');
 const IS_PHP = process.argv.includes('--php');
-const domen = 'crud';
+const domen = '';
 
 // global plugins
 import gulp from 'gulp';
@@ -15,6 +15,9 @@ import del from 'del';
 
 // plugin for server
 import browserSync from 'browser-sync';
+
+// plugin for ftp
+import ftp from 'vinyl-ftp';
 
 // plugins for html
 import gulpFileInclude from 'gulp-file-include';
@@ -57,13 +60,24 @@ const plumberNotify = addTitle => {
   };
 };
 
+// ftp task
+export const ftpConnect = () => {
+  const conn = ftp.create({
+    host: domen,
+    user: 'username',
+    password: 'userpassword',
+    parallel: 10,
+  });
+  return gulp
+    .src(`${destFolder}/**/*.*`)
+    .pipe(gulpPlumber(plumberNotify('ftp')))
+    .pipe(conn.dest(`/`));
+};
+
 // php task
 export const php = () => {
   return gulp
-    .src([
-      `${srcFolder}php/**/*.php`,
-      `!${srcFolder}php/common.blocks/**/*.php`,
-    ])
+    .src(`${srcFolder}php/**/*.php`)
     .pipe(gulpPlumber(plumberNotify('php')))
     .pipe(
       gulpFileInclude({
@@ -190,7 +204,7 @@ export const svg = () => {
     .pipe(
       gulpSvgSprite({
         mode: {
-          stack: {
+          symbol: {
             sprite: `../sprite.svg`,
           },
         },

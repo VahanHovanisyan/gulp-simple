@@ -8,9 +8,11 @@
     "tophp": "gulp tophp",
     "devphp": "gulp dev --php",
     "buildphp": "gulp build --production --php",
+    "deployphp": "gulp build --production ftpConnect --php",
     "dev": "gulp dev",
     "build": "gulp build --production",
-    "preview": "gulp previewBuild --production"
+    "preview": "gulp previewBuild --production",
+    "deploy": "gulp build --production ftpConnect"
   },
   "keywords": [],
   "author": "Vahan Hovanisyan",
@@ -48,6 +50,7 @@
     "prettier": "^3.3.2",
     "sass": "^1.69.5",
     "style-loader": "^3.3.3",
+    "vinyl-ftp": "^0.6.1",
     "webpack": "^5.89.0",
     "webpack-stream": "^7.0.0"
   },
