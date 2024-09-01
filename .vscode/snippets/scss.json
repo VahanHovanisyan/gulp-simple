@@ -96,7 +96,7 @@
 		"scope": "scss",
 		"prefix": "all",
 		"body": [
-			"@include media-adaptiv-all(property,max,min);"
+			"@include media-adaptiv-property(property,max,min);"
 		],
 		"description": "adaptive all property mixin"
 	},
@@ -150,9 +150,9 @@
 		"prefix": "hover",
 		"body": [
 			"@include hover{",
-				"&:hover {",
-					"$1",
-				"}",
+			"&:hover {",
+			"$1",
+			"}",
 			"};"
 		],
 		"description": "hover"
